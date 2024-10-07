@@ -2,11 +2,10 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# Step 1: Import and clean data
+
 df = pd.read_csv('fcc-forum-pageviews.csv', parse_dates=['date'], index_col='date')
 df = df[(df['value'] >= df['value'].quantile(0.025)) & (df['value'] <= df['value'].quantile(0.975))]
 
-# Step 2: Draw Line Plot
 def draw_line_plot():
     fig, ax = plt.subplots(figsize=(12, 6))
     ax.plot(df.index, df['value'], color='red', linewidth=1)
@@ -16,7 +15,7 @@ def draw_line_plot():
     fig.savefig('line_plot.png')
     return fig
 
-# Step 3: Draw Bar Plot
+
 def draw_bar_plot():
     df_bar = df.copy()
     df_bar['year'] = df_bar.index.year
@@ -32,7 +31,6 @@ def draw_bar_plot():
     fig.savefig('bar_plot.png')
     return fig
 
-# Step 4: Draw Box Plot
 def draw_box_plot():
     df_box = df.copy()
     df_box.reset_index(inplace=True)
