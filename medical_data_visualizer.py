@@ -3,19 +3,19 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import numpy as np
 
-# Step 1: Import the data
+
 df = pd.read_csv('medical_examination.csv')
 
-# Step 2: Add 'overweight' column
+
 df['BMI'] = df['weight'] / (df['height'] / 100) ** 2
 df['overweight'] = df['BMI'].apply(lambda x: 1 if x > 25 else 0)
 df = df.drop(columns=['BMI'])
 
-# Step 3: Normalize 'cholesterol' and 'gluc'
+
 df['cholesterol'] = df['cholesterol'].apply(lambda x: 0 if x == 1 else 1)
 df['gluc'] = df['gluc'].apply(lambda x: 0 if x == 1 else 1)
 
-# Step 4: Draw Categorical Plot
+
 def draw_cat_plot():
     df_cat = pd.melt(df, id_vars=['cardio'], value_vars=['cholesterol', 'gluc', 'smoke', 'alco', 'active', 'overweight'])
     df_cat = df_cat.groupby(['cardio', 'variable', 'value'], as_index=False).size()
@@ -25,7 +25,7 @@ def draw_cat_plot():
     fig = g.fig
     return fig
 
-# Step 5: Clean Data
+
 def clean_data(df):
     df_cleaned = df[
         (df['ap_lo'] <= df['ap_hi']) &
@@ -38,7 +38,7 @@ def clean_data(df):
 
 df_cleaned = clean_data(df)
 
-# Step 6: Draw Heat Map
+
 def draw_heat_map():
     df_heat = clean_data(df)
     corr = df_heat.corr()
